@@ -29,7 +29,8 @@
 							<div class="mojiOglasiButton">
 								  <button class="button button-stable">Izmeni</button>
                   <br/>
-                  <button class="button button-stable" ng-click='deleteAd({{oglas.objectId}})'>Obrisi</button>
+                  {{oglas.objectId}}
+                  <button class="button button-stable" ng-click="deleteAd('{{oglas.objectId}}')">Obrisi</button>
               </div>
             </ion-item>
         </ion-list>
