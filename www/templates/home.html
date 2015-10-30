@@ -1,0 +1,15 @@
+<ion-view hide-back-button="true">
+   <ion-content  class="scroll-content ionic-scroll">
+       <a style="text-decoration: none;" collection-repeat="kategorija in kategorije track by $index" href="#/podkategorija/{{kategorija.objectId}}" class="col col-50">
+        	<div style="      border: solid 1px #9E9E9E;
+                            height: 50vw;">
+                <div class="homeTop">
+                  <img class="homeImg" ng-src="{{kategorija.image.url}}" />
+                </div>
+                <div style="margin-top: 5px;" class="homeBottom">
+                  <h3 class="homeKategorija" style="">{{kategorija.name}}</h3>
+                </div>
+            </div>
+    	</a>
+   </ion-content>
+</ion-view>

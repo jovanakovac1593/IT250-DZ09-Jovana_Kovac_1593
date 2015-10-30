@@ -1,0 +1,41 @@
+<ion-view>
+	<ion-content class="scroll-content ionic-scroll" style="background-color: #edecec; padding-left: 20%; padding-right: 30px;">
+	<div class="postaviOglas">
+		<div class="postaviOglasTop">
+			<p>Kategorija:</p>
+			<select class="ion-input-select">
+				<option disabled selected>Odaberi kateg.</option>
+				<option ng-repeat="kategorija in kategorije">{{kategorija.name}}</option>
+			</select>
+		</div>
+		<div class="postaviOglasCenter">
+			<p style="margin-right: 86px;">Ime:</p>
+			<input type="text">
+		</div>
+		<div class="postaviOglasCenter">
+			<p style="margin-right: 64px;">Adresa:</p>
+			<input type="text">
+		</div>
+		<div class="postaviOglasCenter">
+			<p style="margin-right: 19px;">Radno vreme:</p>
+			<input type="text">
+		</div>
+		<div class="postaviOglasCenter">
+			<p style="margin-right: 60px;">Telefon:</p>
+			<input type="text">
+		</div>
+		<div class="postaviOglasTextarea">
+			<p style="margin-right: 80px;">Opis:</p>
+			<textarea></textarea>
+		</div>
+		<div class="postaviOglasSlika">
+			<p style="margin-right: 120px;">Slika:</p>
+			<img src="img/kategorija.png">
+			<input type="file">
+		</div>
+		<div class="postaviOglasButton">
+			<button class="button button-stable">Sacuvaj</button>
+		</div>
+	</div>
+	</ion-content>
+</ion-view>

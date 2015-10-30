@@ -1,0 +1,31 @@
+<ion-view>
+    <ion-content class="scroll-content ionic-scroll" style="background-color: #edecec;">
+        <div class="oglasTop">
+          <div class="oglasLeft">
+            <img ng-src="{{zanatlija.image.url}}">
+            <p class="likes">{{zanatlija.likes}} likes</p>
+          </div>
+          <div class="oglasRight">
+            <p>Ime: {{zanatlija.name}}</p>
+            <hr>
+            <p>Adresa: {{zanatlija.address}}</p>
+            <hr>
+            <p>Radno vreme: {{zanatlija.workingTime}}</p>
+            <hr>
+            <p>Broj: {{zanatlija.tel}}</p>
+          </div>
+          <div class="oglasPhone">
+            <button class="button button-clear button-dark icon ion-ios-telephone"></button>
+          </div>
+        </div>
+        <div class="oglasCenter">
+          <h4>Opis</h4>
+          <p>{{zanatlija.opis}}</p>
+        </div>
+        <div class="oglasBottom">
+          <button class="button button-stable icon ion-social-facebook"></button>
+          <button class="button button-stable icon ion-social-instagram"></button>
+          <button class="button button-stable icon ion-thumbsup"></button>
+        </div>
+    </ion-content>
+</ion-view>
