@@ -194,7 +194,7 @@ angular.module('starter')
     $ionicSideMenuDelegate.toggleLeft();
 })
 
-.controller("MojiOglasiController", function ($rootScope, $scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
+.controller("MojiOglasiController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
     $ionicSideMenuDelegate.toggleLeft();
     AppZanatlijaFactory.getObject('Oglasi')
       .then(function (data) {
@@ -207,23 +207,47 @@ angular.module('starter')
           }
         }
         $scope.oglasi = mojiOglasi;
-
-        $scope.deleteAd = function(objectId) {
-          Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
-          var Oglasi = Parse.Object.extend("Oglasi");
-          var query = new Parse.Query(Oglasi);
-          query.get(objectId, {
-            success: function(myObj) {
-              myObj.destroy({});
-              alert("Uspešno ste obrisali oglas!");
-            },
-            error: function(object, error) {
-              console.log(error.message);
-            }
-          });
-        }
       })
       .catch(function () {
           console.log('error');
       });
+
+      $scope.deleteAd = function(objectId, $event) {
+        $event.preventDefault();
+        Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+        var Oglasi = Parse.Object.extend("Oglasi");
+        var query = new Parse.Query(Oglasi);
+        query.get(objectId, {
+          success: function(myObj) {
+            myObj.destroy({});
+
+            for(var i = 0; i < $localStorage.mojiOglasi.length; i++) {
+              if($localStorage.mojiOglasi[i] == objectId) {
+                $localStorage.mojiOglasi.splice(i,1);
+              }
+            }
+
+            alert("Uspešno ste obrisali oglas!");
+
+            AppZanatlijaFactory.getObject('Oglasi')
+              .then(function (data) {
+                var mojiOglasi = [];
+                for(var k = 0; k < $localStorage.mojiOglasi.length; k++) {
+                  for(var i = 0; i < data.results.length; i++) {
+                    if(data.results[i].objectId == $localStorage.mojiOglasi[k]) {
+                      mojiOglasi.push(data.results[i]);
+                    }
+                  }
+                }
+                $scope.oglasi = mojiOglasi;
+              })
+              .catch(function () {
+                  console.log('error');
+              });
+          },
+          error: function(object, error) {
+            console.log(error.message);
+          }
+        });
+      }
 });
