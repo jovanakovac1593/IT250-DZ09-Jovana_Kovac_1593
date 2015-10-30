@@ -1,6 +1,9 @@
 angular.module('starter')
 
 .controller("MainPageController", function ($rootScope, $scope, $ionicPlatform, $location, $ionicHistory, $localStorage, $ionicFilterBar) {
+    if($localStorage.mojiOglasi == undefined) {
+      $localStorage.mojiOglasi = [];
+    }
     $scope.myGoBack = function() {
         if($ionicHistory.viewHistory().backView.stateName == 'favorites') {
             $rootScope.onFavorites = true;
@@ -97,10 +100,9 @@ angular.module('starter')
     });
 })
 
-.controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
+.controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage) {
     $ionicSideMenuDelegate.toggleLeft();
     $scope.showMe = false;
-    console.log($scope.name);
     AppZanatlijaFactory.getObject('Kategorije')
       .then(function (data) {
         $scope.kategorije = data.results;
@@ -128,7 +130,6 @@ angular.module('starter')
 
       $scope.saveAd = function() {
         Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
-
         var Oglasi = Parse.Object.extend("Oglasi");
         var oglasi = new Oglasi();
 
@@ -161,6 +162,7 @@ angular.module('starter')
                 oglasi.save(null,{
                   success:function(oglasi) {
                     oglasi.save();
+                    $localStorage.mojiOglasi.push(oglasi.id);
                     alert('Uspešno ste dodali oglas!');
                   },
                   error:function(oglasi, error) {
@@ -194,5 +196,34 @@ angular.module('starter')
 
 .controller("MojiOglasiController", function ($rootScope, $scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
     $ionicSideMenuDelegate.toggleLeft();
-    $scope.kategorije = $localStorage.data.Kategorije;
+    AppZanatlijaFactory.getObject('Oglasi')
+      .then(function (data) {
+        var mojiOglasi = [];
+        for(var k = 0; k < $localStorage.mojiOglasi.length; k++) {
+          for(var i = 0; i < data.results.length; i++) {
+            if(data.results[i].objectId == $localStorage.mojiOglasi[k]) {
+              mojiOglasi.push(data.results[i]);
+            }
+          }
+        }
+        $scope.oglasi = mojiOglasi;
+
+        $scope.deleteAd = function(objectId) {
+          Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+          var Oglasi = Parse.Object.extend("Oglasi");
+          var query = new Parse.Query(Oglasi);
+          query.get(objectId, {
+            success: function(myObj) {
+              myObj.destroy({});
+              alert("Uspešno ste obrisali oglas!");
+            },
+            error: function(object, error) {
+              console.log(error.message);
+            }
+          });
+        }
+      })
+      .catch(function () {
+          console.log('error');
+      });
 });

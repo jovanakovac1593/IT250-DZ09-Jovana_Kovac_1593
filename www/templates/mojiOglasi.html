@@ -10,26 +10,26 @@
   <ion-nav-buttons side="right">
       <button class="button button-clear icon ion-ios-search-strong" ng-class="onFavorites ? &apos;button-positive&apos; : &apos;button-dark&apos;" ng-click="showFilterBar()"></button>
   </ion-nav-buttons>
-    <ion-content ng-init="getSpeakers()" class="scroll-content ionic-scroll">
+    <ion-content class="scroll-content ionic-scroll">
         <ion-list class="mojiOglasi">
-            <ion-item style="height: 160px;" ng-repeat="kategorija in kategorije" class="item-thumbnail-left item-text-wrap" href="#/oglas-single-view/">
+            <ion-item style="height: 160px;" ng-repeat="oglas in oglasi" class="item-thumbnail-left item-text-wrap" href="#/oglas-single-view/">
               <div class="mojiOglasiInfo">
                 <div class="mojiOglasiLeft">
-                  <img src="img/kategorija.png">
-                  <p class="likes">123 likes</p>
+                  <img ng-src="{{oglas.image.url}}">
+                  <p class="likes">{{oglas.likes}} likes</p>
                 </div>
                 <div class="mojiOglasiRight">
-                  <p>Ime</p>
+                  <p>Ime(radnje): {{oglas.name}}</p>
                   <hr>
-                  <p>Adresa</p>
+                  <p>Lokacija(adresa): {{oglas.address}}</p>
                   <hr>
-                  <p>Radno vreme</p>
+                  <p>Radno vreme: {{oglas.workingTime}}</p>
                 </div>
               </div>
 							<div class="mojiOglasiButton">
 								  <button class="button button-stable">Izmeni</button>
                   <br/>
-                  <button class="button button-stable">Obrisi</button>
+                  <button class="button button-stable" ng-click='deleteAd({{oglas.objectId}})'>Obrisi</button>
               </div>
             </ion-item>
         </ion-list>
