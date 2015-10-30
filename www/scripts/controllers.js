@@ -82,6 +82,7 @@ angular.module('starter')
 .controller("OglasSingleController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $stateParams, $localStorage) {
   $scope.listCanSwipe = true;
   $scope.refreshVal = false;
+  $scope.filePath = 'img/kategorija.png';
   var id = $stateParams.zanatlijaId;
   AppZanatlijaFactory.getObject('Oglasi')
     .then(function (data) {
@@ -98,6 +99,8 @@ angular.module('starter')
 
 .controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
     $ionicSideMenuDelegate.toggleLeft();
+    $scope.showMe = false;
+
     AppZanatlijaFactory.getObject('Kategorije')
       .then(function (data) {
         $scope.kategorije = data.results;
@@ -105,6 +108,69 @@ angular.module('starter')
       .catch(function () {
           console.log('error');
       });
+
+      $scope.getSubCategory = function() {
+        var podkategorije = [];
+        AppZanatlijaFactory.getObject('Podkategorije')
+          .then(function (data) {
+            for(var i = 0; i < data.results.length; i++) {
+              if($scope.selectedCategory.objectId == data.results[i].kategorijeID.objectId) {
+                podkategorije.push(data.results[i]);
+              }
+            }
+            $scope.podkategorije = podkategorije;
+          })
+          .catch(function () {
+              console.log('error');
+          });
+        $scope.showMe = true;
+      }
+
+      $scope.saveAd = function() {
+        Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+
+        var Oglasi = Parse.Object.extend("Oglasi");
+        var oglasi = new Oglasi();
+
+        //image
+        var fileElement = $("#post-file")[0];
+        var filePath = $("#post-file").val();
+        $scope.filePath = filePath;
+        var fileName = filePath.split("\\").pop();
+
+        if(fileElement.files.length > 0) {
+          var file = fileElement.files[0];
+          var newFile = new Parse.File(fileName, file);
+          newFile.save({
+            success: function() {
+
+            },
+            error: function(file, error) {
+              alert("Error: " + error.message);
+            }
+          }).then(function(theFile) {
+              oglasi.set("image", theFile);
+              oglasi.set("name", $scope.name);
+              oglasi.set("podkategorijaID", {"__type":"Pointer","className":"Podkategorije","objectId":""+ $scope.selectedSubCategory.objectId +""});
+              oglasi.set("address", $scope.address);
+              oglasi.set("workingTime", $scope.workingTime);
+              oglasi.set("tel", $scope.phone);
+              oglasi.set("opis", $scope.description);
+              oglasi.set("likes", 0);
+              oglasi.save(null,{
+                success:function(oglasi) {
+                  oglasi.save();
+                  alert('Oglas je sacuvan!');
+                },
+                error:function(oglasi, error) {
+                    alert("Error:" + error.message);
+
+                }
+              });
+            });
+          }
+        }
+        //end-image
 })
 
 .controller("PretragaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
