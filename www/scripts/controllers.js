@@ -100,7 +100,7 @@ angular.module('starter')
 .controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
     $ionicSideMenuDelegate.toggleLeft();
     $scope.showMe = false;
-
+    console.log($scope.name);
     AppZanatlijaFactory.getObject('Kategorije')
       .then(function (data) {
         $scope.kategorije = data.results;
@@ -149,25 +149,31 @@ angular.module('starter')
               alert("Error: " + error.message);
             }
           }).then(function(theFile) {
-              oglasi.set("image", theFile);
-              oglasi.set("name", $scope.name);
-              oglasi.set("podkategorijaID", {"__type":"Pointer","className":"Podkategorije","objectId":""+ $scope.selectedSubCategory.objectId +""});
-              oglasi.set("address", $scope.address);
-              oglasi.set("workingTime", $scope.workingTime);
-              oglasi.set("tel", $scope.phone);
-              oglasi.set("opis", $scope.description);
-              oglasi.set("likes", 0);
-              oglasi.save(null,{
-                success:function(oglasi) {
-                  oglasi.save();
-                  alert('Oglas je sacuvan!');
-                },
-                error:function(oglasi, error) {
-                    alert("Error:" + error.message);
+              if($scope.name != undefined && $scope.address != undefined && $scope.selectedSubCategory.objectId != undefined && $scope.workingTime != undefined && $scope.phone != undefined && $scope.description != undefined) {
+                oglasi.set("image", theFile);
+                oglasi.set("name", $scope.name);
+                oglasi.set("podkategorijaID", {"__type":"Pointer","className":"Podkategorije","objectId":""+ $scope.selectedSubCategory.objectId +""});
+                oglasi.set("address", $scope.address);
+                oglasi.set("workingTime", $scope.workingTime);
+                oglasi.set("tel", $scope.phone);
+                oglasi.set("opis", $scope.description);
+                oglasi.set("likes", 0);
+                oglasi.save(null,{
+                  success:function(oglasi) {
+                    oglasi.save();
+                    alert('Uspešno ste dodali oglas!');
+                  },
+                  error:function(oglasi, error) {
+                      console.log("Error:" + error.message);
 
-                }
-              });
+                  }
+                });
+              } else {
+                alert('Morate popuniti sva polja!');
+              }
             });
+          } else {
+            alert('Morate dodati sliku!');
           }
         }
         //end-image
