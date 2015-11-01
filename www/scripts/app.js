@@ -63,6 +63,11 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
             templateUrl: 'templates/about-us.html',
             controller: 'AboutUsController'
         })
+        .state('mapa-single-view', {
+            url: '/mapa-single-view/:address',
+            templateUrl: 'templates/mapa-single-view.html',
+            controller: 'MapaSingleController'
+        })
         .state('lajkovaniOglasi', {
             url: '/lajkovaniOglasi',
             templateUrl: 'templates/lajkovaniOglasi.html',
