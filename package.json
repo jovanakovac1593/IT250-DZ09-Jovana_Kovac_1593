@@ -64,7 +64,15 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-whitelist",
     "ionic-plugin-keyboard",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    {
+      "locator": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation.git",
+      "id": "cordova-plugin-geolocation"
+    },
+    {
+      "locator": "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-x-socialsharing"
+    }
   ],
   "cordovaPlatforms": [
     "android"
