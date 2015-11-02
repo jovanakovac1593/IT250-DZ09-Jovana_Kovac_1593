@@ -82,30 +82,48 @@ angular.module('starter')
 		});
 })
 
-.controller("OglasSingleController", function ($scope, $cordovaSocialSharing, $ionicSideMenuDelegate, AppZanatlijaFactory, $stateParams, $localStorage) {
+.controller("OglasSingleController", function ($scope, $cordovaSocialSharing, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	$scope.filePath = 'img/kategorija.png';
 
+
+
 	var id = $stateParams.zanatlijaId;
 	AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {
-			var oglasOpis;
 			var oglasImage;
+			var oglasName;
+			var androidLink;
+			var iosLink;
 			for(var i = 0; i < data.results.length; i++) {
 				if(data.results[i].objectId == id) {
 					$scope.zanatlija = data.results[i];
-					oglasOpis = data.results[i].opis;
 					oglasImage = data.results[i].image.url;
+					oglasName = data.results[i].name;
 				}
 			}
-			$scope.shareAnywhere = function() {
-						$cordovaSocialSharing.share(oglasOpis, "Koristim Zanatlija aplikaciju", oglasImage, null);
-			}
+
+			AppZanatlijaFactory.getObject('ShareLink')
+				.then(function (data) {
+					androidLink = data.results[0].android;
+					iosLink = data.results[0].ios;
+
+					$scope.shareAnywhere = function() {
+								$cordovaSocialSharing.share("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, "Koristim Zanatlija aplikaciju", oglasImage, (ionic.Platform.isAndroid() == true ? androidLink : iosLink));
+					}
+
+				})
+				.catch(function () {
+						console.log('error');
+				});
+
 		})
 		.catch(function () {
 				console.log('error');
 		});
+
+
 })
 
 .controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage) {
