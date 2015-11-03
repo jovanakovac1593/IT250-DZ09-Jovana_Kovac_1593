@@ -2,7 +2,7 @@
 
 /* Side Menu */
 .sideMenu {
-	background-color: #b8aaaa;
+	background-color: #ecf0f1;
 	text-align: center;
 	color: #838383;
 }
@@ -184,7 +184,6 @@
 .item-thumbnail-left > img:first-child, .item-thumbnail-left .item-image, .item-thumbnail-left .item-content > img:first-child, .item-thumbnail-left .item-content .item-image {
 	max-width: 50px;
 	max-height: 50px;
-	border-radius: 30%;
 }
 
 /* ABOUT */
