@@ -165,7 +165,7 @@
 }
 
 .podkategorija .oglasRight {
-	float: left;
+	float: right;
 	margin-left: 50px;
 }
 .podkategorija p {
@@ -175,7 +175,6 @@
     margin: 0 auto;
 }
 .podkategorija hr {
-	width: 130px;
 	border-color: #e2e2e2;
 	border-style: inset;
 	border-width: 1px;
