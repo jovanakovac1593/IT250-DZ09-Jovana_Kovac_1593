@@ -206,13 +206,12 @@ angular.module('starter')
 	}
 })
 
-.controller("PretragaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
+.controller("OdaberiOpstinuController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
 	$ionicSideMenuDelegate.toggleLeft();
 })
 
-.controller("LajkovaniOglasiController", function ($rootScope, $scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
+.controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
 	$ionicSideMenuDelegate.toggleLeft();
-	$scope.kategorije = $localStorage.data.Kategorije;
 })
 
 .controller("AboutUsController", function ($scope, $ionicSideMenuDelegate) {
