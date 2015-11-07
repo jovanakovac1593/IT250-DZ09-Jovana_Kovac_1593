@@ -74,7 +74,7 @@ angular.module('starter')
 		$scope.podkategorije = subCategoriesArray;
 })
 
-.controller("ListaZanatlijaController", function ($rootScope, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+.controller("ListaZanatlijaController", function ($ionicFilterBar, $rootScope, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.podkategorijaId;

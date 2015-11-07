@@ -12,7 +12,7 @@
   </ion-nav-buttons>
     <ion-content class="scroll-content ionic-scroll">
         <ion-list class="podkategorija">
-            <ion-item ng-repeat="zanatlija in zanatlije track by $index" style="background-color: #edecec; height: 160px;" class="item-thumbnail item-text-wrap" href="#/oglas-single-view/{{zanatlija.objectId}}">
+            <ion-item ng-repeat="zanatlija in items" style="background-color: #edecec; height: 160px;" class="item-thumbnail item-text-wrap" href="#/oglas-single-view/{{zanatlija.objectId}}">
                 <div class="oglasLeft">
                   <img ng-src="{{zanatlija.image.url}}">
                 </div>
