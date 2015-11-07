@@ -19,7 +19,8 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
     });
 })
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicFilterBarConfigProvider) {
+    $ionicFilterBarConfigProvider.theme('stable');
     $ionicConfigProvider.views.swipeBackEnabled(true);
     $ionicConfigProvider.backButton.text('');
     $stateProvider

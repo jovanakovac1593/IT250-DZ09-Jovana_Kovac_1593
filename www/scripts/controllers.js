@@ -74,7 +74,7 @@ angular.module('starter')
 		$scope.podkategorije = subCategoriesArray;
 })
 
-.controller("ListaZanatlijaController", function ($ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+.controller("ListaZanatlijaController", function ($rootScope, $ionicFilterBar, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.podkategorijaId;
@@ -89,10 +89,33 @@ angular.module('starter')
 			}
 			$scope.zanatlije = zanatlije;
 			$localStorage.zanatlije = zanatlije;
+			//search
+			var filterBarInstance;
+
+			function getItems () {
+		      var items = $scope.zanatlije;
+		      $scope.items = items;
+		    }
+
+		    getItems();
+
+			$rootScope.showFilterBar = function () {
+			  filterBarInstance = $ionicFilterBar.show({
+				items: $scope.items,
+				update: function (filteredItems, filterText) {
+				  $scope.items = filteredItems;
+				  if (filterText) {
+				  }
+				},
+				  filterProperties: ['name']
+			  });
+			};
+			//END search
 		})
 		.catch(function () {
 				console.log('error');
 		});
+
 })
 
 .controller("OglasSingleController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $stateParams, $localStorage) {
