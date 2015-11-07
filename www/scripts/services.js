@@ -24,18 +24,23 @@ angular.module('starter')
         return response.data;
       });
   };
-  /*
-  ZanatlijaFactory.getNumOfAds = function(className, id) {
-    var whereQuery = 'where=' + '{"' + 'podkategorijaID' + id +'}';
-    return $http.get('https://api.parse.com/1/classes/' + className + '?' + whereQuery, {
-      headers: {
-        'X-Parse-Application-Id':'a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS',
-        'X-Parse-REST-API-Key':'RIMyGtbhV4qkw1q9oG3GboQYMUMOspXQIk2QFtLh'}
-      })
-      .then(function(response) {
-        return response.data;
-      });
-  };
-  */
+
+ZanatlijaFactory.numberOfAds = function(id) {
+	return $http.get('https://api.parse.com/1/classes/' + 'Oglasi' + '/', {
+		headers: {
+			'X-Parse-Application-Id':'a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS',
+			'X-Parse-REST-API-Key':'RIMyGtbhV4qkw1q9oG3GboQYMUMOspXQIk2QFtLh'}
+		})
+		.then(function(response) {
+      var numberOfAds = 0;
+			var oglasi = response.data.results;
+      for(var i = 0; i < oglasi.length; i++) {
+        if(oglasi[i].podkategorijaID.objectId == id) {
+          numberOfAds++;
+        }
+      }
+      return numberOfAds;
+		});
+};
   return ZanatlijaFactory;
 })

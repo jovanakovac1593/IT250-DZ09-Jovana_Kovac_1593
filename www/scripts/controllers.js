@@ -39,11 +39,17 @@ angular.module('starter')
 		});
 })
 
-.controller("PodkategorijaController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+.controller("PodkategorijaController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state, $http) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.kategorijaId;
 	var subCategoriesArray = [];
+	var subCategories = [];
+	//PARSE
+	Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+	var Oglasi = Parse.Object.extend("Oglasi");
+	var query = new Parse.Query(Oglasi);
+	//END PARSE
 
 	AppZanatlijaFactory.getObject('Podkategorije')
 		.then(function (data) {
@@ -52,13 +58,20 @@ angular.module('starter')
 					subCategoriesArray.push(data.results[i]);
 				}
 			}
-
-			$scope.podkategorije = subCategoriesArray;
-			$localStorage.subCategories = subCategoriesArray;
+			angular.forEach(subCategoriesArray, function(obj){
+				AppZanatlijaFactory.numberOfAds(obj.objectId)
+				  .then(function (number) {
+						obj.numOfAds = number;
+				  })
+				  .catch(function () {
+					  console.log('error');
+				  });
+			});
 		})
 		.catch(function () {
-				console.log('error');
+			console.log('error');
 		});
+		$scope.podkategorije = subCategoriesArray;
 })
 
 .controller("ListaZanatlijaController", function ($ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
