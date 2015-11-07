@@ -4,7 +4,7 @@
            <ion-item ng-repeat="podkategorija in podkategorije | orderBy:'numOfAds':'reverse'" class="item-thumbnail-left item-text-wrap" href="#/lista-zanatlija/{{podkategorija.objectId}}" style="background-color: #edecec;">
                <img ng-src="{{podkategorija.image.url}}" />
                <h1>{{podkategorija.name}}</h1>
-               <button id="leftBtn" class="button button-clear button-positive icon ion-chevron-right"></button>
+               <button id="leftBtn" class="button button-clear button-stable icon ion-chevron-right"></button>
                <p>{{podkategorija.numOfAds}}</p>
                <ion-option-button class="{{lecture.alreadyAdded}} icon ion-star" ng-click="refreshVal=true; addRemoveFavorite({{lecture.Id}});"></ion-option-button>
            </ion-item>
