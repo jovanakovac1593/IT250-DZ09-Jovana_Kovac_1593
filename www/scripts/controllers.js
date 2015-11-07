@@ -39,7 +39,7 @@ angular.module('starter')
 		});
 })
 
-.controller("PodkategorijaController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state, $http) {
+.controller("PodkategorijaController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.kategorijaId;
@@ -74,7 +74,7 @@ angular.module('starter')
 		$scope.podkategorije = subCategoriesArray;
 })
 
-.controller("ListaZanatlijaController", function ($rootScope, $ionicFilterBar, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+.controller("ListaZanatlijaController", function ($rootScope, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.podkategorijaId;
@@ -115,25 +115,50 @@ angular.module('starter')
 		.catch(function () {
 				console.log('error');
 		});
-
 })
 
-.controller("OglasSingleController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $stateParams, $localStorage) {
+.controller("OglasSingleController", function ($scope, $cordovaSocialSharing, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	$scope.filePath = 'img/kategorija.png';
+
+
+
 	var id = $stateParams.zanatlijaId;
 	AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {
+			var oglasImage;
+			var oglasName;
+			var androidLink;
+			var iosLink;
 			for(var i = 0; i < data.results.length; i++) {
 				if(data.results[i].objectId == id) {
 					$scope.zanatlija = data.results[i];
+					oglasImage = data.results[i].image.url;
+					oglasName = data.results[i].name;
 				}
 			}
+
+			AppZanatlijaFactory.getObject('ShareLink')
+				.then(function (data) {
+					androidLink = data.results[0].android;
+					iosLink = data.results[0].ios;
+
+					$scope.shareAnywhere = function() {
+								$cordovaSocialSharing.share("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, "Koristim Zanatlija aplikaciju", oglasImage, (ionic.Platform.isAndroid() == true ? androidLink : iosLink));
+					}
+
+				})
+				.catch(function () {
+						console.log('error');
+				});
+
 		})
 		.catch(function () {
 				console.log('error');
 		});
+
+
 })
 
 .controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage) {
@@ -216,13 +241,12 @@ angular.module('starter')
 	}
 })
 
-.controller("PretragaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
+.controller("OdaberiOpstinuController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
 	$ionicSideMenuDelegate.toggleLeft();
 })
 
-.controller("LajkovaniOglasiController", function ($rootScope, $scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
+.controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
 	$ionicSideMenuDelegate.toggleLeft();
-	$scope.kategorije = $localStorage.data.Kategorije;
 })
 
 .controller("AboutUsController", function ($scope, $ionicSideMenuDelegate) {

@@ -39,10 +39,15 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
             templateUrl: 'templates/postaviOglas.html',
             controller: 'PostaviOglasController'
         })
-        .state('pretraga', {
-            url: '/pretraga',
-            templateUrl: 'templates/pretraga.html',
-            controller: 'PretragaController'
+        .state('odaberi-opstinu', {
+            url: '/odaberi-opstinu',
+            templateUrl: 'templates/odaberiOpstinu.html',
+            controller: 'OdaberiOpstinuController'
+        })
+        .state('uslovi-koriscenja', {
+            url: '/uslovi-koriscenja',
+            templateUrl: 'templates/usloviKoriscenja.html',
+            controller: 'UsloviKoriscenjaController'
         })
         .state('podkategorija', {
             url: '/podkategorija/:kategorijaId',
@@ -68,11 +73,6 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
             url: '/mapa-single-view/:address',
             templateUrl: 'templates/mapa-single-view.html',
             controller: 'MapaSingleController'
-        })
-        .state('lajkovaniOglasi', {
-            url: '/lajkovaniOglasi',
-            templateUrl: 'templates/lajkovaniOglasi.html',
-            controller: 'LajkovaniOglasiController'
         })
     $urlRouterProvider.otherwise('/home');
 });

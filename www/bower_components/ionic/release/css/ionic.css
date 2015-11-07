@@ -2755,7 +2755,7 @@ ion-infinite-scroll {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #ecf0f1;
   overflow: hidden; }
 
 .view-container {
@@ -3104,8 +3104,8 @@ a.subdued {
     .bar.bar-calm.bar-footer {
       background-image: linear-gradient(180deg, #0a9ec7, #0a9ec7 50%, transparent 50%); }
   .bar.bar-assertive {
-    border-color: #b8aaaa;
-    background-color: #b8aaaa;
+    border-color: white;
+    background-color: white;
     background-image: linear-gradient(0deg, #e42012, #e42012 50%, transparent 50%);
     color: #fff; }
     .bar.bar-assertive .title {
