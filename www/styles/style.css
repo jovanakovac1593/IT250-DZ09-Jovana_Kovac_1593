@@ -1,8 +1,7 @@
-/* Empty. Add your own CSS if you like */
 /* Side Menu */
 
 .sideMenu {
-    background-color: #ecf0f1;
+    background-color: #ffffff;
     text-align: center;
     color: #838383;
 }
@@ -29,7 +28,7 @@
     font-size: 11px;
     padding-top: 10px;
     padding-left: 10px;
-    color: #fff;
+    color: #3f3f3f;
 }
 /* HOME */
 
@@ -192,8 +191,8 @@
 }
 
 .podkategorija img {
-    width: 100px;
-    height: 100px;
+    width: 160px;
+    height: 160px;
 }
 
 .podkategorija .likes {
@@ -201,8 +200,9 @@
 }
 
 .podkategorija .oglasRight {
-    float: right;
+    float: left;
     margin-left: 50px;
+    margin-top: 50px;
 }
 
 .podkategorija p {

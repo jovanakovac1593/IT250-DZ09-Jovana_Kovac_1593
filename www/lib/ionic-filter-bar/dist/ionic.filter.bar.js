@@ -432,7 +432,7 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
             comparator: null,
             debounce: true,
             delay: 300,
-            cancelText: 'Cancel',
+            cancelText: 'Otkaži',
             cancelOnStateChange: true,
             container: $body,
             favoritesTitle: 'Favorite Searches',

@@ -1,13 +1,17 @@
 <ion-view>
-	<ion-content class="scroll-content ionic-scroll" style="background-color: #edecec;">
-		
-        <ion-list class="podkategorija">
-            <ion-item ng-repeat="opstina in opstine track by $index" style="background-color: #edecec; height: 160px;" class="item-thumbnail item-text-wrap">
-                    
-                </div>
-            </ion-item>
+    <ion-content class="scroll-content ionic-scroll">
+
+        <ion-list class="itemList" can-swipe="listCanSwipe">
+
+            <ion-checkbox ng-repeat="opstina in opstine" class="item-thumbnail-left item-text-wrap" href="#/usloviKoriscenja" style="background-color: ">
+               
+                <h1>{{opstina.opstinaName}}</h1>
+               </ion-checkbox>
+
+
+            
         </ion-list>
-        
-        
-	</ion-content>
+
+
+    </ion-content>
 </ion-view>

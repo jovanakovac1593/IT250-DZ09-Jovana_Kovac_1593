@@ -241,8 +241,17 @@ angular.module('starter')
 	}
 })
 
-.controller("OdaberiOpstinuController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
+.controller("OdaberiOpstinuController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
 	$ionicSideMenuDelegate.toggleLeft();
+    $scope.listCanSwipe = true;
+	$scope.refreshVal = false;
+	AppZanatlijaFactory.getObject('Opstina')
+		.then(function (data) {
+			$scope.opstine = data.results;
+		})
+		.catch(function (object, error) {
+				console.log('error');
+		});
 })
 
 .controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
