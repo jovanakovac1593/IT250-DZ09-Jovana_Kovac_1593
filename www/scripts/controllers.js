@@ -122,12 +122,9 @@ angular.module('starter')
 	$scope.refreshVal = false;
 	$scope.filePath = 'img/kategorija.png';
 
-
-
 	var id = $stateParams.zanatlijaId;
 	AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {
-			var oglasImage;
 			var oglasName;
 			var androidLink;
 			var iosLink;
@@ -144,8 +141,8 @@ angular.module('starter')
 					androidLink = data.results[0].android;
 					iosLink = data.results[0].ios;
 
-					$scope.shareAnywhere = function() {
-								$cordovaSocialSharing.share("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, "Koristim Zanatlija aplikaciju", oglasImage, (ionic.Platform.isAndroid() == true ? androidLink : iosLink));
+					$scope.facebookShare = function() {
+								$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
 					}
 
 				})
