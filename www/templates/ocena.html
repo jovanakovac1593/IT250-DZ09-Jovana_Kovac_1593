@@ -1,0 +1,29 @@
+<ion-view>
+	<ion-content class="scroll-content ionic-scroll">
+
+    <table style="undefined;table-layout: fixed; width: 100%" align="center">
+        <colgroup>
+            <col style="width: 150px">
+                <col style="width: 150px">
+                    <col style="width: 150px">
+        </colgroup>
+        <tr class="h3Oglas">
+            <th>Kvalitet</th>
+            <th>Cena</th>
+            <th>Usluga</th>
+        </tr>
+        <tr>
+            <th><ionic-ratings ratingsobj='kvalitetRatings'></ionic-ratings>
+            </th>
+            <th><ionic-ratings ratingsobj='cenaRatings'></ionic-ratings>
+            </th>
+            <th><ionic-ratings ratingsobj='uslugaRatings'></ionic-ratings>
+            </th>
+        </tr>
+    </table>
+    <br/>
+
+    <button ng-click="ocenite()" class="button button-stable">Ocenite</button>
+
+	</ion-content>
+</ion-view>

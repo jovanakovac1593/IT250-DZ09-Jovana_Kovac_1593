@@ -149,8 +149,45 @@ angular.module('starter')
 			for(var i = 0; i < data.results.length; i++) {
 				if(data.results[i].objectId == id) {
 					$scope.zanatlija = data.results[i];
-					oglasImage = data.results[i].image.url;
 					oglasName = data.results[i].name;
+
+					if(data.results[i].kvalitet != null) {
+						var sum = 0;
+
+						for(var j = 0; j < data.results[i].kvalitet.length; j++) {
+							sum = sum + data.results[i].kvalitet[j];
+							$scope.kvalitet = Math.round((sum / data.results[i].kvalitet.length) * 100) / 100;
+
+						}
+
+					} else {
+						$scope.kvalitet = 0;
+					}
+
+					if(data.results[i].cena != null) {
+						var sum = 0;
+
+						for(var j = 0; j < data.results[i].cena.length; j++) {
+							sum = sum + data.results[i].cena[j];
+							$scope.cena = Math.round((sum / data.results[i].cena.length) * 100) / 100;
+
+						}
+					} else {
+						$scope.cena = 0;
+					}
+
+					if(data.results[i].usluga != null) {
+						var sum = 0;
+
+						for(var j = 0; j < data.results[i].usluga.length; j++) {
+							sum = sum + data.results[i].usluga[j];
+							$scope.usluga = Math.round((sum / data.results[i].usluga.length) * 100) / 100;
+
+						}
+
+					} else {
+						$scope.usluga = 0;
+					}
 				}
 			}
 
@@ -160,7 +197,7 @@ angular.module('starter')
 					iosLink = data.results[0].ios;
 
 					$scope.facebookShare = function() {
-						$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
+								$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
 					}
 
 				})
@@ -174,6 +211,91 @@ angular.module('starter')
 		});
 
 
+})
+
+.controller("OcenaController", function ($scope, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
+
+	var kvalitet = 0;
+	var cena = 0;
+	var usluga = 0;
+	var id = $stateParams.zanatlijaId;
+
+	$scope.kvalitetRatings = {
+        iconOn : 'ion-ios-star',
+        iconOff : 'ion-ios-star-outline',
+        iconOnColor: 'rgb(200, 200, 100)',
+        iconOffColor:  'rgb(200, 100, 100)',
+        rating:  2,
+        minRating:1,
+        callback: function(rating) {
+          kvalitet = rating;
+        }
+      };
+
+	$scope.cenaRatings = {
+        iconOn : 'ion-ios-star',
+        iconOff : 'ion-ios-star-outline',
+        iconOnColor: 'rgb(200, 200, 100)',
+        iconOffColor:  'rgb(200, 100, 100)',
+        rating:  2,
+        minRating:1,
+        callback: function(rating) {
+          cena = rating;
+        }
+      };
+
+	$scope.uslugaRatings = {
+        iconOn : 'ion-ios-star',
+        iconOff : 'ion-ios-star-outline',
+        iconOnColor: 'rgb(200, 200, 100)',
+        iconOffColor:  'rgb(200, 100, 100)',
+        rating:  2,
+        minRating:1,
+        callback: function(rating) {
+					usluga = rating;
+        }
+      };
+
+			$scope.ocenite = function() {
+				console.log("Kvalitet: " + kvalitet);
+				console.log("Cena: " + cena);
+				console.log("Usluga: " + usluga);
+
+				Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+				var Oglasi = Parse.Object.extend("Oglasi");
+				//var oglasi = new Oglasi();
+				var query = new Parse.Query(Oglasi);
+				query.get(id, {
+				  success: function(oglas) {
+				    // The object was retrieved successfully.
+						oglas.save(null, {
+							success: function(oglas) {
+								oglas.add("kvalitet", kvalitet);
+								oglas.add("cena", cena);
+								oglas.add("usluga", usluga);
+								oglas.save();
+							}
+						});
+				  },
+				  error: function(object, error) {
+				    // The object was not retrieved successfully.
+				    // error is a Parse.Error with an error code and message.
+				  }
+				});
+			}
+
+	AppZanatlijaFactory.getObject('Oglasi')
+		.then(function (data) {
+			for(var i = 0; i < data.results.length; i++) {
+				if(data.results[i].objectId == id) {
+					$scope.zanatlija = data.results[i];
+				}
+			}
+
+		})
+		.catch(function () {
+				console.log('error');
+		});
 })
 
 .controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage) {
