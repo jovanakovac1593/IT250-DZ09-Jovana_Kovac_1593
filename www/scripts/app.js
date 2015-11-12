@@ -5,7 +5,9 @@
 angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jett.ionic.filter.bar'])
 
 .run(function ($ionicPlatform, AppZanatlijaFactory, $localStorage, $http, $state) {
-
+	if($localStorage.opstine == undefined) {
+		$localStorage.opstine = [];
+	}
     $ionicPlatform.ready(function () {
         $state.go('home');
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

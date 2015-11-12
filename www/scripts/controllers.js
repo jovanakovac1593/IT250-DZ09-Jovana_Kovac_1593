@@ -44,13 +44,11 @@ angular.module('starter')
 	$scope.refreshVal = false;
 	var id = $stateParams.kategorijaId;
 	var subCategoriesArray = [];
-	var subCategories = [];
 	//PARSE
 	Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
 	var Oglasi = Parse.Object.extend("Oglasi");
 	var query = new Parse.Query(Oglasi);
 	//END PARSE
-
 	AppZanatlijaFactory.getObject('Podkategorije')
 		.then(function (data) {
 			for(var i = 0; i < data.results.length; i++) {
@@ -59,13 +57,23 @@ angular.module('starter')
 				}
 			}
 			angular.forEach(subCategoriesArray, function(obj){
-				AppZanatlijaFactory.numberOfAds(obj.objectId)
-				  .then(function (number) {
-						obj.numOfAds = number;
-				  })
-				  .catch(function () {
-					  console.log('error');
-				  });
+				if($localStorage.opstine.length == 0) {
+					AppZanatlijaFactory.numberOfAds(obj.objectId)
+					  .then(function (number) {
+							obj.numOfAds = number;
+					  })
+					  .catch(function () {
+						  console.log('error');
+					  });
+				} else {
+					AppZanatlijaFactory.numberOfAdsWithOp(obj.objectId, $localStorage.opstine)
+					  .then(function (number) {
+							obj.numOfAds = number;
+					  })
+					  .catch(function () {
+						  console.log('error');
+					  });
+				}
 			});
 		})
 		.catch(function () {
@@ -82,9 +90,19 @@ angular.module('starter')
 
 	AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {
-			for(var i = 0; i < data.results.length; i++) {
-				if(data.results[i].podkategorijaID.objectId == id) {
-					zanatlije.push(data.results[i]);
+			if($localStorage.opstine.length == 0) {
+				for(var i = 0; i < data.results.length; i++) {
+					if(data.results[i].podkategorijaID.objectId == id) {
+						zanatlije.push(data.results[i]);
+					}
+				}
+			} else {
+				for(var k = 0; k < $localStorage.opstine.length; k++) {
+					for(var i = 0; i < data.results.length; i++) {
+						if(data.results[i].podkategorijaID.objectId == id && data.results[i].OpstinaID.objectId == $localStorage.opstine[k]) {
+							zanatlije.push(data.results[i]);
+						}
+					}
 				}
 			}
 			$scope.zanatlije = zanatlije;
@@ -142,7 +160,7 @@ angular.module('starter')
 					iosLink = data.results[0].ios;
 
 					$scope.facebookShare = function() {
-								$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
+						$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
 					}
 
 				})
@@ -238,20 +256,47 @@ angular.module('starter')
 	}
 })
 
-.controller("OdaberiOpstinuController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+.controller("OdaberiOpstinuController", function ($scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $localStorage) {
 	$ionicSideMenuDelegate.toggleLeft();
     $scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	AppZanatlijaFactory.getObject('Opstina')
 		.then(function (data) {
 			$scope.opstine = data.results;
+			angular.forEach($scope.opstine, function(obj){
+				var isChecked = false;
+				for(var i = 0; i < $localStorage.opstine.length; i++) {
+					if($localStorage.opstine[i] == obj.objectId) {
+						obj["checked"] = true;
+						isChecked = true;
+					}
+				}
+
+				if(isChecked == false) {
+					obj["checked"] = false;
+				}
+			});
 		})
 		.catch(function (object, error) {
 				console.log('error');
 		});
+
+	$scope.saveOpstinaID = function(id) {
+		var hasOpstina = false;
+		for(var i = 0; i < $localStorage.opstine.length; i++) {
+			if($localStorage.opstine[i] == id) {
+				$localStorage.opstine.splice(i, 1);
+				hasOpstina = true;
+			}
+		}
+
+		if(hasOpstina == false) {
+			$localStorage.opstine.push(id);
+		}
+	}
 })
 
-.controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory) {
+.controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate) {
 	$ionicSideMenuDelegate.toggleLeft();
 })
 
