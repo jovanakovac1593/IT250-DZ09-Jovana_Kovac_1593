@@ -1,6 +1,13 @@
 <ion-view>
-    <ion-content class="scroll-content ionic-scroll" style="background-color: #edecec;" padding="false" class="has-header">
-        <img ng-src="{{zanatlija.image.url}}" width="100%" height="auto" style="width: 100%; height: 180px;">
+    <ion-content class="scroll-content ionic-scroll" padding="false" class="has-header">
+
+        <img ng-src="{{zanatlija.image.url}}" width="100%" height="auto" style="width: 100%; height: 180px; border-bottom: 5px solid #f79328;">
+        
+        
+            <div style="width:60px ; height: 60px ; background:white; border: 5px solid #f79328 ;margin-top: -33px ; margin-left: auto; margin-right: auto ; position: relative; border-radius: 50%">
+                <img src="img/cvecar.png" width="48px" height="48px">
+
+            </div>
 
         <h1 class="h1Oglas">{{zanatlija.name}}</h1>
         <br/>
@@ -35,8 +42,8 @@
                 <button class="button button-clear button-dark icon ion-ios-telephone"></button>
             </a>
             <a href="#/mapa-single-view/{{zanatlija.address}}">
-                    <button class="button button-clear button-dark icon ion-ios-location"></button>
-                </a>
+                <button class="button button-clear button-dark icon ion-ios-location"></button>
+            </a>
         </div>
 
         <div class="oglasTop">
@@ -44,7 +51,9 @@
             <p>{{zanatlija.opis}}</p>
         </div>
         <div class="oglasBottom">
-            <button ng-click="facebookShare()" class="button button-stable icon ion-social-facebook"></button>
+            
+             <button ng-click="facebookShare()" class="button button-stable icon ion-social-facebook"> </button>
+           
         </div>
     </ion-content>
 </ion-view>
