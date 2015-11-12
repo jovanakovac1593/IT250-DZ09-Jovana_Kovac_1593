@@ -274,12 +274,12 @@ angular.module('starter')
 								oglas.add("cena", cena);
 								oglas.add("usluga", usluga);
 								oglas.save();
+								alert("Uspesno ste ocenili oglas!");
 							}
 						});
 				  },
 				  error: function(object, error) {
-				    // The object was not retrieved successfully.
-				    // error is a Parse.Error with an error code and message.
+				    alert("Doslo je do greske, oglas nije ocenjen");
 				  }
 				});
 			}
