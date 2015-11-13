@@ -141,7 +141,11 @@ angular.module('starter')
 	$scope.filePath = 'img/kategorija.png';
 
 	var id = $stateParams.zanatlijaId;
-	AppZanatlijaFactory.getObject('Oglasi')
+    
+    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+
+        if (toState.controller == "OglasSingleController") {
+            AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {
 			var oglasName;
 			var androidLink;
@@ -209,6 +213,10 @@ angular.module('starter')
 		.catch(function () {
 				console.log('error');
 		});
+        }
+})
+    
+	
 
 
 })
