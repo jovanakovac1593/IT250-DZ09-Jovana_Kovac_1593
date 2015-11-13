@@ -215,9 +215,9 @@ angular.module('starter')
 
 .controller("OcenaController", function ($scope, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
 
-	var kvalitet = 0;
-	var cena = 0;
-	var usluga = 0;
+	var kvalitet = 2;
+	var cena = 2;
+	var usluga = 2;
 	var id = $stateParams.zanatlijaId;
 
 	$scope.kvalitetRatings = {
