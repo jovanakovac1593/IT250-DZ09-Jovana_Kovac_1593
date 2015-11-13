@@ -7,7 +7,18 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
 .run(function ($ionicPlatform, AppZanatlijaFactory, $localStorage, $http, $state) {
 	if($localStorage.opstine == undefined) {
 		$localStorage.opstine = [];
+		AppZanatlijaFactory.getObject('Opstina')
+			.then(function (data) {
+                console.log(data);
+				for(var i = 0; i < data.results.length; i++) {
+                    $localStorage.opstine.push(data.results[i].objectId);
+                }
+			})
+			.catch(function (object, error) {
+					console.log('error');
+			});
 	}
+    console.log($localStorage.opstine);
     $ionicPlatform.ready(function () {
         $state.go('home');
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
