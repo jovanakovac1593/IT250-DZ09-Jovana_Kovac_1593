@@ -231,8 +231,8 @@ angular.module('starter')
 	$scope.kvalitetRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: 'rgb(200, 200, 100)',
-        iconOffColor:  'rgb(200, 100, 100)',
+        iconOnColor: '#11c1f3',
+        iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
         callback: function(rating) {
@@ -243,8 +243,8 @@ angular.module('starter')
 	$scope.cenaRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: 'rgb(200, 200, 100)',
-        iconOffColor:  'rgb(200, 100, 100)',
+        iconOnColor: '#11c1f3',
+        iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
         callback: function(rating) {
@@ -255,8 +255,8 @@ angular.module('starter')
 	$scope.uslugaRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: 'rgb(200, 200, 100)',
-        iconOffColor:  'rgb(200, 100, 100)',
+        iconOnColor: '#11c1f3',
+        iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
         callback: function(rating) {
@@ -282,12 +282,12 @@ angular.module('starter')
 								oglas.add("cena", cena);
 								oglas.add("usluga", usluga);
 								oglas.save();
-								alert("Uspesno ste ocenili oglas!");
+								window.alert("Uspešno ste ocenili oglas!");
 							}
 						});
 				  },
 				  error: function(object, error) {
-				    alert("Doslo je do greske, oglas nije ocenjen");
+				    alert("Došlo je do greške, pokušajte ponovo.");
 				  }
 				});
 			}

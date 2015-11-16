@@ -1,58 +1,61 @@
 <ion-view>
     <ion-content class="scroll-content ionic-scroll" padding="false" class="has-header">
 
-        <img ng-src="{{zanatlija.image.url}}" width="100%" height="auto" style="width: 100%; height: 180px; border-bottom: 5px solid #f79328;">
+		<div ng-style="{'background-image': 'url('+zanatlija.image.url+')'}" style="background-position: center;
+    background-size: cover; width:100%; height:180px; border-bottom: 4px solid #f79328;"></div>
 
-
-            <div style="width:60px ; height: 60px ; background:white; border: 5px solid #f79328 ;margin-top: -33px ; margin-left: auto; margin-right: auto ; position: relative; border-radius: 50%">
-                <img src="img/cvecar.png" width="48px" height="48px">
-
-            </div>
+        <div style="width:60px ; height: 60px ; background:white; border: 4px solid #f79328 ;margin-top: -33px ; margin-left: auto; margin-right: auto ; position: relative; border-radius: 50%">
+            <img src="img/cvecar.png" width="48px" height="48px">
+        </div>
 
         <h1 class="h1Oglas">{{zanatlija.name}}</h1>
         <br/>
 
         <table style="undefined;table-layout: fixed; width: 100%" align="center">
             <colgroup>
-                <col style="width: 150px">
-                    <col style="width: 150px">
-                        <col style="width: 150px">
+                <col style="width: 50px">
+                    <col style="width: 50px">
+                        <col style="width: 50px">
             </colgroup>
             <tr class="h3Oglas">
                 <th>Kvalitet</th>
                 <th>Cena</th>
                 <th>Usluga</th>
             </tr>
-            <tr>
-              <th>{{kvalitet}}</th>
-              <th>{{cena}}</th>
-              <th>{{usluga}}</th>
+            <tr class="h3Oglas">
+                <th>{{kvalitet}}</th>
+                <th>{{cena}}</th>
+                <th>{{usluga}}</th>
             </tr>
         </table>
-        <br/>
-
-        <p>Mozete oceniti <a style="color: blue;" href="#/ocena/{{zanatlija.objectId}}">ovde</a></p>
 
         <div class="oglasTop">
-            <p>Lokacija: {{zanatlija.address}}</p>
+            <p align="center">Možete oceniti <a style="color: blue;" href="#/ocena/{{zanatlija.objectId}}">ovde</a>
+            </p>
+        </div>
+
+
+        <div class="oglasTop">
+           
             <p>Radno vreme: {{zanatlija.workingTime}}</p>
-            <p>Kontakt telefon: {{zanatlija.tel}}</p>
-            <a href="tel:{{zanatlija.tel}}">
+             <a href="tel:{{zanatlija.tel}}" style="float:right; margin-right: 25px">
                 <button class="button button-clear button-dark icon ion-ios-telephone"></button>
             </a>
-            <a href="#/mapa-single-view/{{zanatlija.address}}">
+            <a href="#/mapa-single-view/{{zanatlija.address}}" style="float: right;">
                 <button class="button button-clear button-dark icon ion-ios-location"></button>
             </a>
+            <p>Lokacija: {{zanatlija.address}}</p>
+            <p>Kontakt telefon: {{zanatlija.tel}}</p>
         </div>
 
         <div class="oglasTop">
-            <h2 class="h2Oglas">Opis</h3>
+            <h2 class="h2Oglas">O nama:</h3>
             <p>{{zanatlija.opis}}</p>
         </div>
-        <div class="oglasBottom">
+        
+        <div align="center">
+            <div class="fbShareBtn" ng-click="facebookShare()"></div>
+			</div>
 
-             <button ng-click="facebookShare()" class="button button-stable icon ion-social-facebook"> </button>
-
-        </div>
     </ion-content>
 </ion-view>
