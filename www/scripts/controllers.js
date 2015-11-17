@@ -231,7 +231,7 @@ angular.module('starter')
 	$scope.kvalitetRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: '#11c1f3',
+        iconOnColor: '#f1c40f',
         iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
@@ -243,7 +243,7 @@ angular.module('starter')
 	$scope.cenaRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: '#11c1f3',
+        iconOnColor: '#f1c40f',
         iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
@@ -255,7 +255,7 @@ angular.module('starter')
 	$scope.uslugaRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
-        iconOnColor: '#11c1f3',
+        iconOnColor: '#f1c40f',
         iconOffColor:  '#bdc3c7',
         rating:  2,
         minRating:1,
@@ -282,12 +282,12 @@ angular.module('starter')
 								oglas.add("cena", cena);
 								oglas.add("usluga", usluga);
 								oglas.save();
-								window.alert("Uspešno ste ocenili oglas!");
+								navigator.notification.alert('Uspešno ste ocenili', null, "Obaveštenje", 'OK')
 							}
 						});
 				  },
 				  error: function(object, error) {
-				    alert("Došlo je do greške, pokušajte ponovo.");
+				   navigator.notification.alert('Došlo je do greške, pokušajte ponovo.', null, "Obaveštenje", 'OK');
 				  }
 				});
 			}

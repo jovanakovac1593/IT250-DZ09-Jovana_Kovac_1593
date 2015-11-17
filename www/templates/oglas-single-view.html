@@ -2,9 +2,9 @@
     <ion-content class="scroll-content ionic-scroll" padding="false" class="has-header">
 
 		<div ng-style="{'background-image': 'url('+zanatlija.image.url+')'}" style="background-position: center;
-    background-size: cover; width:100%; height:180px; border-bottom: 4px solid #f79328;"></div>
+    background-size: cover; width:100%; height:180px; border-bottom: 4px solid #3f3f3f;"></div>
 
-        <div style="width:60px ; height: 60px ; background:white; border: 4px solid #f79328 ;margin-top: -33px ; margin-left: auto; margin-right: auto ; position: relative; border-radius: 50%">
+        <div style="width:60px ; height: 60px ; background:white; border: 4px solid #3f3f3f ;margin-top: -33px ; margin-left: auto; margin-right: auto ; position: relative; border-radius: 50%">
             <img src="img/cvecar.png" width="48px" height="48px">
         </div>
 
@@ -36,14 +36,16 @@
 
 
         <div class="oglasTop">
-           
+
+			<div style="float:right;"><a href="#/mapa-single-view/{{zanatlija.address}}">
+                <button class="button button-clear button-dark icon ion-ios-location"  style="float: right; margin-right: 25px;"></button>
+            </a><br/>
+      
+             <a href="tel:{{zanatlija.tel}}" >
+				 <button class="button button-clear button-dark icon ion-ios-telephone" style="float:right; margin-right: 25px"></button></a></div>
+			
+			
             <p>Radno vreme: {{zanatlija.workingTime}}</p>
-             <a href="tel:{{zanatlija.tel}}" style="float:right; margin-right: 25px">
-                <button class="button button-clear button-dark icon ion-ios-telephone"></button>
-            </a>
-            <a href="#/mapa-single-view/{{zanatlija.address}}" style="float: right;">
-                <button class="button button-clear button-dark icon ion-ios-location"></button>
-            </a>
             <p>Lokacija: {{zanatlija.address}}</p>
             <p>Kontakt telefon: {{zanatlija.tel}}</p>
         </div>

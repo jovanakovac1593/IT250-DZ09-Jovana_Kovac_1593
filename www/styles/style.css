@@ -73,7 +73,7 @@
 	font-family: LatoRegular;
 	color: #3f3f3f;
 	text-align: center;
-	font-size: 18px;
+	font-size: 20px;
 	font-style: italic;
 }
 
@@ -153,6 +153,7 @@
 	width: 60px;
 	height: 60px;
 	margin-top: 30px;
+	margin-bottom: 30px;
 	border-radius: 100%;
 	background-image: url(../img/fb.png);
 }
@@ -231,8 +232,8 @@
 
 .podkategorija .oglasRight {
 	float: left;
-	margin-left: 50px;
 	margin-top: 50px;
+	margin-left: 20px;
 }
 
 .podkategorija p {
