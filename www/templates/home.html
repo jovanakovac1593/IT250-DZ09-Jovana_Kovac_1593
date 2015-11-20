@@ -1,28 +1,31 @@
-<ion-view hide-back-button="true">
-    <ion-content class="scroll-content ionic-scroll">
+<ion-view hide-back-button="true" hide-nav-bar="true">
+	<ion-content class="scroll-content ionic-scroll">
 
 
-        <a style="text-decoration: none;" collection-repeat="kategorija in kategorije track by $index" href="#/podkategorija/{{kategorija.objectId}}" class="col col-50">
-        	<div style="      border: solid 1px #9E9E9E;
-                            height: 50vw;">
-                <div class="homeTop">
-                  <img class="homeImg" ng-src="{{kategorija.image.url}}" />
-                </div>
-                <div style="margin-top: 5px;" class="homeBottom">
-                <h3 class="homeKategorija" style="">{{kategorija.name}}</h3>
-                </div>
-            </div>
-    	</a>
-        
-        <!-- div style="background-image: url('../img/zanatlija.jpg'); width:100%; position: absolute">
+
+		<div style="position:relative;">
+			<img src="img/zanat_pocetna.jpg" width="100%">
+			<div class="burgerMenu" menu-toggle="left" ng-click="toggleLeft()"></div>
+
+			<a ng-href="#/podkategorija/lpO5zbIcKV" href="#/podkategorija/lpO5zbIcKV">
+				<div class="servisi"> </div></a>
+
+			<a ng-href="#/podkategorija/sS6rWsWwJl" href="#/podkategorija/sS6rWsWwJl">
+				<div class="negaTela"></div></a>
+				
+			<a ng-href="#/podkategorija/gbXtTIjxBR" href="#/podkategorija/gbXtTIjxBR">
+				<div class="rucniRad"></div></a>
+				
+			<a ng-href="#/podkategorija/jyq0YXQFvc" href="#/podkategorija/jyq0YXQFvc">
+				<div class="usluge"></div></a>
+			
+			<a ng-href="#/podkategorija/guWpP8QGgW" href="#/podkategorija/guWpP8QGgW">
+				<div class="domacinstvo"></div></a>
+			
+			<a ng-href="#/podkategorija/726YytpN5H" href="#/podkategorija/726YytpN5H">
+				<div class="nonstop"></div></a>
+			</div>
 
 
-            <div style="width:11.6% ; height: 21% ; background-color:pink ; margin-top=2% ; margin-left: 17%; position: absolute;">
-
-            </div>
-
-        </div -->
-
-
-    </ion-content>
+	</ion-content>
 </ion-view>

@@ -201,7 +201,7 @@ angular.module('starter')
 					iosLink = data.results[0].ios;
 
 					$scope.facebookShare = function() {
-								$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Paste it dude!');
+								$cordovaSocialSharing.shareViaFacebookWithPasteMessageHint("Pogledajte moj oglas na aplikaciji Zanatlija za " + (ionic.Platform.isAndroid() == true ? "Android" : "IOS") + ": " + oglasName, null, (ionic.Platform.isAndroid() == true ? androidLink : iosLink), 'Nalepi tekst');
 					}
 
 				})
@@ -282,7 +282,7 @@ angular.module('starter')
 								oglas.add("cena", cena);
 								oglas.add("usluga", usluga);
 								oglas.save();
-								navigator.notification.alert('Uspešno ste ocenili', null, "Obaveštenje", 'OK')
+								navigator.notification.alert('Uspešno ste ocenili!', null, "Obaveštenje", 'OK')
 							}
 						});
 				  },
