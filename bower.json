@@ -4,7 +4,8 @@
   "dependencies": {
     "ionic": "v1.0.0-rc.3",
     "ngCordova": "v0.1.14-alpha",
-    "ionic-ratings": "~0.2.0"
+    "ionic-ratings": "~0.2.0",
+    "angular_ios9_patch": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.6",
