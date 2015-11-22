@@ -20,9 +20,9 @@
                 <div class="oglasRight">
                     <p>{{zanatlija.name}}</p>
                     <br/>
-                    <p>Opština: </p>
+                    <p>Opština: {{zanatlija.opstinaName}}</p>
                     <br/>
-                    <p>Ocena: {{(cena + kvalitet + usluga)/3 | number:2}}</p>
+                    <p>Ocena: {{zanatlija.prosecnaOcena | number:2}}</p>
                 </div>
 
             </ion-item>

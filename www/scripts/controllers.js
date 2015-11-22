@@ -1,17 +1,35 @@
 angular.module('starter')
 
 .controller("MainPageController", function ($rootScope, $scope, $ionicPlatform, $location, $ionicHistory, $localStorage, $ionicFilterBar) {
+
+	$scope.$watch($ionicHistory.currentStateName(), function() {
+		if($ionicHistory.currentStateName() == 'oglas-single-view') {
+			$rootScope.isSinglePage = true;
+		} else {
+			$rootScope.isSinglePage = false;
+
+		}
+	});
+
 	if($localStorage.mojiOglasi == undefined) {
 		$localStorage.mojiOglasi = [];
 	}
 	$scope.myGoBack = function() {
-			if($ionicHistory.viewHistory().backView.stateName == 'favorites') {
-					$rootScope.onFavorites = true;
-					$ionicHistory.goBack();
+		$scope.$watch($ionicHistory.currentStateName(), function() {
+			if($ionicHistory.currentStateName() == 'oglas-single-view') {
+				$rootScope.isSinglePage = true;
 			} else {
-					$rootScope.onFavorites = false;
-					$ionicHistory.goBack();
+				$rootScope.isSinglePage = false;
+
 			}
+		});
+		if($ionicHistory.viewHistory().backView.stateName == 'favorites') {
+				$rootScope.onFavorites = true;
+				$ionicHistory.goBack();
+		} else {
+				$rootScope.onFavorites = false;
+				$ionicHistory.goBack();
+		}
 	};
 })
 
@@ -28,6 +46,7 @@ angular.module('starter')
 })
 
 .controller("HomeController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	AppZanatlijaFactory.getObject('Kategorije')
@@ -40,6 +59,7 @@ angular.module('starter')
 })
 
 .controller("PodkategorijaController", function ($ionicHistory, $rootScope, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.kategorijaId;
@@ -83,6 +103,7 @@ angular.module('starter')
 })
 
 .controller("ListaZanatlijaController", function ($ionicFilterBar, $rootScope, $ionicHistory, $stateParams, $scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $stateParams, $localStorage, $ionicScrollDelegate, $state) {
+
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	var id = $stateParams.podkategorijaId;
@@ -105,6 +126,41 @@ angular.module('starter')
 					}
 				}
 			}
+
+			angular.forEach(zanatlije, function(obj){
+				AppZanatlijaFactory.getObject('Opstina')
+					.then(function (data) {
+						for(var i = 0; i < data.results.length; i++) {
+							if(data.results[i].objectId == obj.OpstinaID.objectId) {
+								obj["opstinaName"] = data.results[i].opstinaName;
+							}
+						}
+						//Prosecna ocena
+						var sum = 0;
+						for(var i = 0; i < obj.cena.length; i++) {
+							sum += obj.cena[i];
+						}
+						//cena
+						var cena = Math.round((sum / obj.cena.length) * 100) / 100;
+
+						sum = 0;
+						for(var i = 0; i < obj.kvalitet.length; i++) {
+							sum += obj.kvalitet[i];
+						}
+						//kvalitet
+						var kvalitet = Math.round((sum / obj.kvalitet.length) * 100) / 100;
+
+						sum = 0;
+						for(var i = 0; i < obj.usluga.length; i++) {
+							sum += obj.usluga[i];
+						}
+						//usluga
+						var usluga = Math.round((sum / obj.usluga.length) * 100) / 100;
+
+						obj["prosecnaOcena"] = (usluga + cena + kvalitet) / 3;
+					})
+
+			});
 			$scope.zanatlije = zanatlije;
 			$localStorage.zanatlije = zanatlije;
 			//search
@@ -135,13 +191,22 @@ angular.module('starter')
 		});
 })
 
-.controller("OglasSingleController", function ($scope, $cordovaSocialSharing, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
+.controller("OglasSingleController", function ($scope, $cordovaSocialSharing, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage, $rootScope, $ionicHistory) {
+
+	$scope.$watch($ionicHistory.currentStateName(), function() {
+		if($ionicHistory.currentStateName() == 'oglas-single-view') {
+			$rootScope.isSinglePage = true;
+		} else {
+			$rootScope.isSinglePage = false;
+
+		}
+	});
 	$scope.listCanSwipe = true;
 	$scope.refreshVal = false;
 	$scope.filePath = 'img/kategorija.png';
 
 	var id = $stateParams.zanatlijaId;
-    
+
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
         if (toState.controller == "OglasSingleController") {
@@ -153,6 +218,14 @@ angular.module('starter')
 			for(var i = 0; i < data.results.length; i++) {
 				if(data.results[i].objectId == id) {
 					$scope.zanatlija = data.results[i];
+					AppZanatlijaFactory.getObject('Podkategorije')
+					.then(function (data) {
+						for(var k = 0; k < data.results.length; k++) {
+							if(data.results[k].objectId == $scope.zanatlija.podkategorijaID.objectId) {
+								$scope.imagePodkategorija = data.results[k].image.url;
+							}
+						}
+					})
 					oglasName = data.results[i].name;
 
 					if(data.results[i].kvalitet != null) {
@@ -214,14 +287,19 @@ angular.module('starter')
 				console.log('error');
 		});
         }
-})
-    
-	
-
-
+	})
 })
 
-.controller("OcenaController", function ($scope, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage) {
+.controller("OcenaController", function ($scope, $ionicSideMenuDelegate, $ionicPlatform, AppZanatlijaFactory, $stateParams, $localStorage, $rootScope, $ionicHistory) {
+
+	$scope.$watch($ionicHistory.currentStateName(), function() {
+		if($ionicHistory.currentStateName() == 'oglas-single-view') {
+			$rootScope.isSinglePage = true;
+		} else {
+			$rootScope.isSinglePage = false;
+
+		}
+	});
 
 	var kvalitet = 2;
 	var cena = 2;
@@ -306,7 +384,8 @@ angular.module('starter')
 		});
 })
 
-.controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage) {
+.controller("PostaviOglasController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $rootScope) {
+
 	$ionicSideMenuDelegate.toggleLeft();
 	$scope.showMe = false;
 	AppZanatlijaFactory.getObject('Kategorije')
@@ -386,7 +465,8 @@ angular.module('starter')
 	}
 })
 
-.controller("OdaberiOpstinuController", function ($scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $localStorage) {
+.controller("OdaberiOpstinuController", function ($scope, AppZanatlijaFactory, $ionicSideMenuDelegate, $localStorage, $rootScope, $ionicHistory) {
+
 	$ionicSideMenuDelegate.toggleLeft();
     $scope.listCanSwipe = true;
 	$scope.refreshVal = false;
@@ -427,14 +507,26 @@ angular.module('starter')
 })
 
 .controller("UsloviKoriscenjaController", function ($scope, $ionicSideMenuDelegate) {
+
 	$ionicSideMenuDelegate.toggleLeft();
 })
 
 .controller("AboutUsController", function ($scope, $ionicSideMenuDelegate) {
+
 	$ionicSideMenuDelegate.toggleLeft();
 })
 
-.controller("MapaSingleController", function ($scope, $ionicSideMenuDelegate, $ionicLoading, $compile, $window, $stateParams) {
+.controller("MapaSingleController", function ($scope, $ionicSideMenuDelegate, $ionicLoading, $compile, $window, $stateParams, $rootScope, $ionicHistory) {
+
+	$scope.$watch($ionicHistory.currentStateName(), function() {
+		if($ionicHistory.currentStateName() == 'oglas-single-view') {
+			$rootScope.isSinglePage = true;
+		} else {
+			$rootScope.isSinglePage = false;
+
+		}
+	});
+
 	function initialize() {
 		var map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 17,
@@ -493,7 +585,8 @@ angular.module('starter')
 
 })
 
-.controller("MojiOglasiController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar) {
+.controller("MojiOglasiController", function ($scope, $ionicSideMenuDelegate, AppZanatlijaFactory, $localStorage, $ionicFilterBar, $rootScope) {
+
 	$ionicSideMenuDelegate.toggleLeft();
 	AppZanatlijaFactory.getObject('Oglasi')
 		.then(function (data) {

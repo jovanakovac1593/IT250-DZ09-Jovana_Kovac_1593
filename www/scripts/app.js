@@ -18,7 +18,6 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
 					console.log('error');
 			});
 	}
-    console.log($localStorage.opstine);
     $ionicPlatform.ready(function () {
         $state.go('home');
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
