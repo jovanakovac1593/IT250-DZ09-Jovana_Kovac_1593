@@ -75,7 +75,8 @@
     },
     "cordova-plugin-inappbrowser",
     "cordova-plugin-dialogs",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-whitelist"
   ],
   "cordovaPlatforms": [
     "android"
