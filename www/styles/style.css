@@ -278,7 +278,7 @@
 }
 
 .podkategorija img {
-	width: 160px;
+	width: 140px;
 	height: 160px;
 }
 
@@ -288,16 +288,18 @@
 
 .podkategorija .oglasRight {
 	float: left;
-	margin-top: 50px;
+	margin-top: 34px;
+	margin-bottom: 34px;
 	margin-left: 20px;
 }
 
 .podkategorija p {
 	color: #919191;
 	font-family: LatoRegular;
-	font-size: 17px;
+	font-size: 15px;
 	margin: 0 auto;
 	color: #888888;
+	line-height: 200%;
 }
 
 .podkategorija hr {
