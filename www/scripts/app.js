@@ -55,7 +55,8 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
         .state('odaberi-opstinu', {
             url: '/odaberi-opstinu',
             templateUrl: 'templates/odaberiOpstinu.html',
-            controller: 'OdaberiOpstinuController'
+            controller: 'OdaberiOpstinuController',
+						cache: false
         })
         .state('uslovi-koriscenja', {
             url: '/uslovi-koriscenja',
@@ -65,7 +66,8 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngResource', 'ngCordova', 'jet
         .state('podkategorija', {
             url: '/podkategorija/:kategorijaId',
             templateUrl: 'templates/podkategorija.html',
-            controller: 'PodkategorijaController'
+            controller: 'PodkategorijaController',
+						cache: false
         })
         .state('lista-zanatlija', {
             url: '/lista-zanatlija/:podkategorijaId',
