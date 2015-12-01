@@ -300,7 +300,7 @@ angular.module('starter')
 
 		}
 	});
-
+	var ocenjeno = [];
 	var kvalitet = 2;
 	var cena = 2;
 	var usluga = 2;
@@ -330,7 +330,7 @@ angular.module('starter')
         }
       };
 
-	$scope.uslugaRatings = {
+			$scope.uslugaRatings = {
         iconOn : 'ion-ios-star',
         iconOff : 'ion-ios-star-outline',
         iconOnColor: '#f1c40f',
@@ -346,28 +346,41 @@ angular.module('starter')
 				console.log("Kvalitet: " + kvalitet);
 				console.log("Cena: " + cena);
 				console.log("Usluga: " + usluga);
+				console.log($localStorage.ocenjeno);
+				var alreadyVoted = false;
+				for(var i = 0; i < $localStorage.ocenjeno.length; i++) {
+					if($localStorage.ocenjeno[i] == id) {
+						alreadyVoted = true;
+						console.log(alreadyVoted);
+					}
+				}
 
-				Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
-				var Oglasi = Parse.Object.extend("Oglasi");
-				//var oglasi = new Oglasi();
-				var query = new Parse.Query(Oglasi);
-				query.get(id, {
-				  success: function(oglas) {
-				    // The object was retrieved successfully.
-						oglas.save(null, {
-							success: function(oglas) {
-								oglas.add("kvalitet", kvalitet);
-								oglas.add("cena", cena);
-								oglas.add("usluga", usluga);
-								oglas.save();
-								navigator.notification.alert('Uspešno ste ocenili!', null, "Obaveštenje", 'OK')
-							}
-						});
-				  },
-				  error: function(object, error) {
-				   navigator.notification.alert('Došlo je do greške, pokušajte ponovo.', null, "Obaveštenje", 'OK');
-				  }
-				});
+				if(alreadyVoted == true) {
+				navigator.notification.alert('Već ste ocenili ovaj oglas.', null, "Obaveštenje", 'OK');
+				} else {
+					Parse.initialize("a4AoXutQ2mf95haI5DU3dJKTYZKX7YXxtzQOsXAS", "pQooKRQFxVeiHGi7iJnbtCdOfvHER8wDQ3RXK6wl");
+					var Oglasi = Parse.Object.extend("Oglasi");
+					//var oglasi = new Oglasi();
+					var query = new Parse.Query(Oglasi);
+					query.get(id, {
+						success: function(oglas) {
+							// The object was retrieved successfully.
+							oglas.save(null, {
+								success: function(oglas) {
+									$localStorage.ocenjeno.push(id);
+									oglas.add("kvalitet", kvalitet);
+									oglas.add("cena", cena);
+									oglas.add("usluga", usluga);
+									oglas.save();
+									navigator.notification.alert('Uspešno ste ocenili!', null, "Obaveštenje", 'OK')
+								}
+							});
+						},
+						error: function(object, error) {
+						 navigator.notification.alert('Došlo je do greške, pokušajte ponovo.', null, "Obaveštenje", 'OK');
+						}
+					});
+				}
 			}
 
 	AppZanatlijaFactory.getObject('Oglasi')
