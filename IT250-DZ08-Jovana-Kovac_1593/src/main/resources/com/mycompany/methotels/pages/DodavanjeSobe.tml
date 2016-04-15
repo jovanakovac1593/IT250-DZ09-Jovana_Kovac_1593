@@ -1,0 +1,12 @@
+<html t:type="layout" title="Dodavanje sobe"
+      t:sidebarTitle="Framework Version"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+    <t:beaneditform object="sobe" exclude="id" add="odabir" >
+        <p:odabir>
+            <t:select t:blankLabel="Odaberi_hotel" t:id="ime" validate="required" model="sviHoteli"/>
+        </p:odabir>
+    </t:beaneditform>
+    <t:grid source="sveSobe" exclude="id">
+    </t:grid>
+</html>

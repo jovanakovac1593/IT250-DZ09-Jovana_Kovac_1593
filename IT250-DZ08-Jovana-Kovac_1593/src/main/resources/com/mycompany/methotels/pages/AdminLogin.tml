@@ -1,0 +1,13 @@
+<html t:type="layout" title="Contact com.mycompany"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Login admin</h1>
+    <t:beaneditform t:id="form" object="userLogin" submitlabel="Login" exclude="adminid,rola">
+        <t:errors/>
+        <p:sifra>
+            <t:label for="password"/>
+            <t:passwordfield t:id="password" value="userLogin.password"/>
+        </p:sifra>
+    </t:beaneditform>
+</html>

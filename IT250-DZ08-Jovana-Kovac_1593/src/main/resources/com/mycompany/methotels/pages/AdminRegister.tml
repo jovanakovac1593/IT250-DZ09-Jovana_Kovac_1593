@@ -1,0 +1,9 @@
+<html t:type="layout" title="Contact com.mycompany"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Register admin</h1>
+    <t:beaneditform t:id="form" object="userReg" exclude="adminid,rola">
+        <t:errors/>
+    </t:beaneditform>
+</html>

@@ -1,0 +1,15 @@
+<html t:type="layout" title="Contact com.mycompany"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+    <t:actionlink t:id="logout" class="btn btn-default navbar-btn">Logout</t:actionlink>
+    <h1>Dodaj sobu</h1>
+    <t:beaneditform t:id="fsobe" object="sobe" exclude="id" submitLabel="Dodaj">
+    </t:beaneditform>
+    <h1>Rezervisi sobu</h1>
+    <t:beaneditform t:id="rezervisi" object="rezervacija" exclude="rezervacijaid" submitLabel="Rezervisi">
+    </t:beaneditform>
+    <h1>Dodaj admina</h1>
+    <t:beaneditform t:id="adminRegister" object="administrator" exclude="adminid,rola">
+        <t:errors/>
+    </t:beaneditform>
+</html>
